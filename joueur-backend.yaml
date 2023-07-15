@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Windows\system32\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: joueur-backend
+  name: joueur-backend
+  namespace: joueur-rc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      io.kompose.service: joueur-backend
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Windows\system32\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.service: joueur-backend
+    spec:
+      containers:
+        - env:
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: pass@123
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://db:5432/joueur_users
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+          image: manishshivanna/joueur-backend:latest
+          name: joueur-backend
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\Windows\system32\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: joueur-backend
+  name: joueur-backend
+  namespace: joueur-rc
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: joueur-backend
+status:
+  loadBalancer: {}

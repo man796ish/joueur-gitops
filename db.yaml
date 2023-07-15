@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Windows\system32\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: db
+  name: db
+  namespace: joueur-rc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      io.kompose.service: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Windows\system32\kompose.exe convert
+        kompose.version: 1.26.0 (40646f47)
+      labels:
+        io.kompose.service: db
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              value: joueur_users
+            - name: POSTGRES_PASSWORD
+              value: pass@123
+            - name: POSTGRES_USER
+              value: postgres
+          image: postgres:14.1-alpine
+          name: db
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db
+            - mountPath: /docker-entrypoint-initdb.d/
+              name: db-claim1
+      restartPolicy: Always
+      volumes:
+        - name: db
+          persistentVolumeClaim:
+            claimName: db
+        - name: db-claim1
+          persistentVolumeClaim:
+            claimName: db-claim1
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\Windows\system32\kompose.exe convert
+    kompose.version: 1.26.0 (40646f47)
+  labels:
+    io.kompose.service: db
+  name: db
+  namespace: joueur-rc
+spec:
+  ports:
+    - name: "5432"
+      port: 5432
+      targetPort: 5432
+  selector:
+    io.kompose.service: db
+status:
+  loadBalancer: {}
+
