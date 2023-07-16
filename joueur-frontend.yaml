@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: joueur-frontend
-        image: manishshivanna/joueur-frontend:rc-6-ad4de64 
+        image: manishshivanna/joueur-frontend:rc-7-c3cb24b 
         resources:
           limits:
             memory: 2048Mi
