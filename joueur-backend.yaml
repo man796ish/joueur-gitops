@@ -30,20 +30,27 @@ spec:
               value: jdbc:postgresql://db:5432/joueur_users
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
-          image: manishshivanna/joueur-backend:rc-1-47c5a89 
+          image: manishshivanna/joueur-backend:rc-2-550356d 
           name: joueur-backend
           ports:
             - containerPort: 8080
           readinessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 120
             periodSeconds: 5
           livenessProbe:
             tcpSocket:
               port: 8080
-            initialDelaySeconds: 60
+            initialDelaySeconds: 120
             periodSeconds: 5
+          resources:
+          limits:
+            memory: 2048Mi
+            cpu: 1
+          requests:
+            memory: 300Mi
+            cpu: 500m
           resources: {}
       restartPolicy: Always
 status: {}
