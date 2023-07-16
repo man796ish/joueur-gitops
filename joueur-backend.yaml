@@ -30,7 +30,7 @@ spec:
               value: jdbc:postgresql://db:5432/joueur_users
             - name: SPRING_DATASOURCE_USERNAME
               value: postgres
-          image: manishshivanna/joueur-backend:rc-7-0d5e4e0 
+          image: manishshivanna/joueur-backend:rc-1-0d5e4e0 
           name: joueur-backend
           ports:
             - containerPort: 8080
