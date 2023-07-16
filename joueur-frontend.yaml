@@ -14,13 +14,23 @@ spec:
     spec:
       containers:
       - name: joueur-frontend
-        image: manishshivanna/joueur-frontend:rc-6-4bc7f9b 
+        image: manishshivanna/joueur-frontend:rc-2-066daa2 
         resources:
           limits:
             memory: "2048Mi"
             cpu: "1000m"
         ports:
         - containerPort: 3000
+        readinessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 2
+        livenessProbe:
+          tcpSocket:
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 2
 ---
 apiVersion: v1
 kind: Service
