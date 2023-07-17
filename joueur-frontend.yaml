@@ -14,14 +14,14 @@ spec:
     spec:
       containers:
       - name: joueur-frontend
-        image: manishshivanna/joueur-frontend:rc-9-1d97168 
+        image: manishshivanna/joueur-frontend:rc-10-a317f3e 
         resources:
           limits:
             memory: 275Mi
-            cpu: 10
+            cpu: 2
           requests:
             memory: 50Mi
-            cpu: 2
+            cpu: 1
         ports:
         - containerPort: 3000
         readinessProbe:
